@@ -110,7 +110,7 @@
     self.layoutView.y = superview.halfH - self.layoutView.halfH;
 }
 @end
-
+const void *_layoutKey;
 @implementation UIView (Layout)
 -(void)make_Layout:(void (^)(MMLayout *))layout{
     if (layout) {
@@ -118,7 +118,75 @@
         layout(mm_Layout);
     }
 }
+- (MMLayout *)mm_selfLayout{
+    MMLayout *layout = objc_getAssociatedObject(self, &_layoutKey);
+    if (layout == nil) {
+        layout = [[MMLayout alloc] initWithLayoutView:self];
+        objc_setAssociatedObject(self, &_layoutKey, layout, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+    }
+    return layout;
+}
 
+-(UIView *(^)(CGFloat))top{
+    __weak typeof(self)_self = self;
+    return ^(CGFloat top){
+        __strong typeof(_self)self = _self;
+        [self mm_selfLayout].top = top;
+        return self;
+    };
+}
+-(UIView *(^)(CGFloat))bottom{
+    __weak typeof(self)_self = self;
+    return ^(CGFloat bottom){
+        __strong typeof(_self)self = _self;
+        [self mm_selfLayout].bottom = bottom;
+        return self;
+    };
+}
+
+
+-(UIView *(^)(CGFloat))left{
+    __weak typeof(self)_self = self;
+    return ^(CGFloat left){
+        __strong typeof(_self)self = _self;
+        [self mm_selfLayout].left = left;
+        return self;
+    };
+}
+
+
+-(UIView *(^)(CGFloat))right{
+    __weak typeof(self)_self = self;
+    return ^(CGFloat right){
+        __strong typeof(_self)self = _self;
+        [self mm_selfLayout].right = right;
+        return self;
+    };
+}
+-(UIView *(^)(CGFloat))width{
+    __weak typeof(self)_self = self;
+    return ^(CGFloat width){
+        __strong typeof(_self)self = _self;
+        [self mm_selfLayout].width = width;
+        return self;
+    };
+}
+-(UIView *(^)(CGFloat))height{
+    __weak typeof(self)_self = self;
+    return ^(CGFloat height){
+        __strong typeof(_self)self = _self;
+        [self mm_selfLayout].height = height;
+        return self;
+    };
+}
+-(UIView *(^)(CGSize))size{
+    __weak typeof(self)_self = self;
+    return ^(CGSize size){
+        __strong typeof(_self)self = _self;
+        [self mm_selfLayout].size = size;
+        return self;
+    };
+}
 @end
 
 

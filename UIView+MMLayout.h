@@ -51,6 +51,17 @@
 //设置自己的Layout
 - (void)make_Layout:(void(^)(MMLayout * layout))layout;
 
+
+
+
+- (UIView *(^)(CGFloat top))top;
+- (UIView *(^)(CGFloat bottom))bottom;
+- (UIView *(^)(CGFloat left))left;
+- (UIView *(^)(CGFloat right))right;
+- (UIView *(^)(CGFloat width))width;
+- (UIView *(^)(CGFloat height))height;
+- (UIView *(^)(CGSize size))size;
+
 @end
 
 
