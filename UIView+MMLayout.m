@@ -71,7 +71,7 @@
 -(CGFloat)halfCenterY{
    return self.centerY / 2;
 }
--(CGSize)size{
+-(CGSize)mm_size{
     return self.bounds.size;
 }
 
