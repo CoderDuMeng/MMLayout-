@@ -38,7 +38,7 @@
 -(CGFloat)centerX{
     return self.center.x;
 }
--(CGFloat)centenY{
+-(CGFloat)centerY{
     return self.center.y;
 }
 - (CGFloat)maxY{
