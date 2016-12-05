@@ -1,7 +1,7 @@
 
 
 #import "UIView+MMLayout.h"
-
+#import <objc/runtime.h>
 @implementation UIView (MM)
 - (void)setX:(CGFloat)x{
     CGRect frame = self.frame;
@@ -35,6 +35,12 @@
 - (CGFloat)h{
     return self.frame.size.height;
 }
+-(CGFloat)centerX{
+    return self.center.x;
+}
+-(CGFloat)centenY{
+    return self.center.y;
+}
 - (CGFloat)maxY{
     return CGRectGetMaxY(self.frame);
 }
@@ -59,6 +65,16 @@
 - (CGFloat)halfY{
     return self.y / 2;
 }
+-(CGFloat)halfCenterX{
+    return self.centerX / 2;
+}
+-(CGFloat)halfCenterY{
+   return self.centerY / 2;
+}
+-(CGSize)size{
+    return self.bounds.size;
+}
+
 @end
 @interface MMLayout()
 @property (weak   , nonatomic) UIView *layoutView;
@@ -118,6 +134,7 @@ const void *_layoutKey;
         layout(mm_Layout);
     }
 }
+
 - (MMLayout *)mm_selfLayout{
     MMLayout *layout = objc_getAssociatedObject(self, &_layoutKey);
     if (layout == nil) {
@@ -132,7 +149,7 @@ const void *_layoutKey;
     return ^(CGFloat top){
         __strong typeof(_self)self = _self;
         [self mm_selfLayout].top = top;
-        return self;
+           return self;
     };
 }
 -(UIView *(^)(CGFloat))bottom{
@@ -187,6 +204,8 @@ const void *_layoutKey;
         return self;
     };
 }
+
+
 @end
 
 

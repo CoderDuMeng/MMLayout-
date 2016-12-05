@@ -22,6 +22,8 @@
 - (CGFloat)w;
 - (void)setH:(CGFloat)h;
 - (CGFloat)h;
+- (CGFloat)centerX;
+- (CGFloat)centerY;
 - (CGFloat)maxY;
 - (CGFloat)minY;
 - (CGFloat)maxX;
@@ -30,6 +32,11 @@
 - (CGFloat)halfH;
 - (CGFloat)halfX;
 - (CGFloat)halfY;
+- (CGFloat)halfCenterX;
+- (CGFloat)halfCenterY;
+- (CGSize)size;
+
+
 @end
 @interface MMLayout : NSObject
 -(instancetype)initWithLayoutView:(UIView *)LayoutView;
@@ -41,17 +48,12 @@
 @property (assign , nonatomic) CGFloat height;  //右
 @property (assign , nonatomic) CGSize  size;
 
-//距离父控件中心  //<<调用此方法钱必须先设置自己的宽高
+//距离父控件中心  //<<调用此方法前必须先设置自己的宽高
 - (void)center;
-
 @end
-
 @interface UIView (Layout)
-
 //设置自己的Layout
 - (void)make_Layout:(void(^)(MMLayout * layout))layout;
-
-
 
 
 - (UIView *(^)(CGFloat top))top;
@@ -61,6 +63,7 @@
 - (UIView *(^)(CGFloat width))width;
 - (UIView *(^)(CGFloat height))height;
 - (UIView *(^)(CGSize size))size;
+
 
 @end
 
