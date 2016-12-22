@@ -62,20 +62,26 @@
  }];
 */
 - (void)make_Layout:(void(^)(MMLayout * layout))layout;
+
+/* 
+  当frmae 将要属性发生变化的时候会调用此方法
+*/
+- (void)make_LayoutUpdateChange:(void(^)(CGRect frame))block;
+
 /*
    示例链接编程
  
    self.width(100).height(100).left(10).top(10)
  
 */
-- (UIView *(^)(CGFloat top))top;
-- (UIView *(^)(CGFloat bottom))bottom;
-- (UIView *(^)(CGFloat left))left;
-- (UIView *(^)(CGFloat right))right;
-- (UIView *(^)(CGFloat width))width;
-- (UIView *(^)(CGFloat height))height;
-- (UIView *(^)(CGSize size))size;
-
+- (UIView *(^)(CGFloat top))top;            ///< set frame y
+- (UIView *(^)(CGFloat bottom))bottom;      ///< set frame y
+- (UIView *(^)(CGFloat left))left;          ///< set frame x
+- (UIView *(^)(CGFloat right))right;        ///< set frame x
+- (UIView *(^)(CGFloat width))width;        ///< set frame width
+- (UIView *(^)(CGFloat height))height;      ///< set frame height
+- (UIView *(^)(CGSize size))size;           ///< set frame size
+- (UIView *(^)())mm_center;                 ///< set frame center  前提是有w h 调用次方法居中父类
 
 @end
 
