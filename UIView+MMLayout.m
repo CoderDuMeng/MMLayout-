@@ -158,67 +158,67 @@ const void *_layoutKey;
     return layout;
 }
 
--(UIView *(^)(CGFloat))top{
+-(UIView *(^)(CGFloat))m_top{
     __weak typeof(self)_self = self;
-    return ^(CGFloat top){
+    return ^(CGFloat m_top){
         __strong typeof(_self)self = _self;
-        [self mm_selfLayout].top = top;
+        [self mm_selfLayout].top = m_top;
            return self;
     };
 }
--(UIView *(^)(CGFloat))bottom{
+-(UIView *(^)(CGFloat))m_bottom{
     __weak typeof(self)_self = self;
-    return ^(CGFloat bottom){
+    return ^(CGFloat m_bottom){
         __strong typeof(_self)self = _self;
-        [self mm_selfLayout].bottom = bottom;
+        [self mm_selfLayout].bottom = m_bottom;
         return self;
     };
 }
 
 
--(UIView *(^)(CGFloat))left{
+-(UIView *(^)(CGFloat))m_left{
     __weak typeof(self)_self = self;
-    return ^(CGFloat left){
+    return ^(CGFloat m_left){
         __strong typeof(_self)self = _self;
-        [self mm_selfLayout].left = left;
+        [self mm_selfLayout].left = m_left;
         return self;
     };
 }
 
 
--(UIView *(^)(CGFloat))right{
+-(UIView *(^)(CGFloat))m_right{
     __weak typeof(self)_self = self;
-    return ^(CGFloat right){
+    return ^(CGFloat m_right){
         __strong typeof(_self)self = _self;
-        [self mm_selfLayout].right = right;
+        [self mm_selfLayout].right = m_right;
         return self;
     };
 }
--(UIView *(^)(CGFloat))width{
+-(UIView *(^)(CGFloat))m_width{
     __weak typeof(self)_self = self;
-    return ^(CGFloat width){
+    return ^(CGFloat m_width){
         __strong typeof(_self)self = _self;
-        [self mm_selfLayout].width = width;
+        [self mm_selfLayout].width = m_width;
         return self;
     };
 }
--(UIView *(^)(CGFloat))height{
+-(UIView *(^)(CGFloat))m_height{
     __weak typeof(self)_self = self;
-    return ^(CGFloat height){
+    return ^(CGFloat m_height){
         __strong typeof(_self)self = _self;
-        [self mm_selfLayout].height = height;
+        [self mm_selfLayout].height = m_height;
         return self;
     };
 }
--(UIView *(^)(CGSize))size{
+-(UIView *(^)(CGSize))m_size{
     __weak typeof(self)_self = self;
-    return ^(CGSize size){
+    return ^(CGSize m_size){
         __strong typeof(_self)self = _self;
-        [self mm_selfLayout].size = size;
+        [self mm_selfLayout].size = m_size;
         return self;
     };
 }
--(UIView *(^)())mm_center{
+-(UIView *(^)())m_center{
     __weak typeof(self)_self  = self;
     return ^{
         __strong typeof(_self)self = _self;

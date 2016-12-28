@@ -74,14 +74,14 @@
    self.width(100).height(100).left(10).top(10)
  
 */
-- (UIView *(^)(CGFloat top))top;            ///< set frame y
-- (UIView *(^)(CGFloat bottom))bottom;      ///< set frame y
-- (UIView *(^)(CGFloat left))left;          ///< set frame x
-- (UIView *(^)(CGFloat right))right;        ///< set frame x
-- (UIView *(^)(CGFloat width))width;        ///< set frame width
-- (UIView *(^)(CGFloat height))height;      ///< set frame height
-- (UIView *(^)(CGSize size))size;           ///< set frame size
-- (UIView *(^)())mm_center;                 ///< set frame center  前提是有w h 调用次方法居中父类
+- (UIView *(^)(CGFloat top))m_top;            ///< set frame y
+- (UIView *(^)(CGFloat bottom))m_bottom;      ///< set frame y
+- (UIView *(^)(CGFloat left))m_left;          ///< set frame x
+- (UIView *(^)(CGFloat right))m_right;        ///< set frame x
+- (UIView *(^)(CGFloat width))m_width;        ///< set frame width
+- (UIView *(^)(CGFloat height))m_height;      ///< set frame height
+- (UIView *(^)(CGSize size))m_size;           ///< set frame size
+- (UIView *(^)())m_center;                 ///< set frame center  前提是有w h 调用次方法居中父类
 
 @end
 
