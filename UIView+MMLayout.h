@@ -7,8 +7,8 @@
  Demo du
 */
 
-#define m_weakSelf   autoreleasepool {} __weak typeof(self)mm_self_ = self
-#define m_strongSelf autoreleasepool {} __strong typeof(mm_self_)self = mm_self_
+#define m_weakify(object) autoreleasepool   {} __weak  typeof(object) weak##object = object
+#define m_strongify(object) autoreleasepool {} __weak  typeof(weak##object) object = weak##object
 
 
 

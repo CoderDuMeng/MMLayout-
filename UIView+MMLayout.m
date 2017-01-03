@@ -176,17 +176,17 @@ const void *_layoutKey;
 
 
 -(UIView *(^)(CGFloat))m_top{
-    @m_weakSelf;
+    @m_weakify(self);
     return ^(CGFloat m_top){
-        @m_strongSelf;
+        @m_strongify(self);
         [self mm_selfLayout].top = m_top;
         return self;
     };
 }
 -(UIView *(^)(CGFloat))m_bottom{
-    @m_weakSelf;
+    @m_weakify(self);
     return ^(CGFloat m_bottom){
-        @m_strongSelf;
+        @m_strongify(self);
         [self mm_selfLayout].bottom = m_bottom;
         return self;
     };
@@ -194,9 +194,9 @@ const void *_layoutKey;
 
 
 -(UIView *(^)(CGFloat))m_left{
-    @m_weakSelf;
+    @m_weakify(self);
     return ^(CGFloat m_left){
-        @m_strongSelf;
+        @m_strongify(self);
         [self mm_selfLayout].left = m_left;
         return self;
     };
@@ -204,41 +204,41 @@ const void *_layoutKey;
 
 
 -(UIView *(^)(CGFloat))m_right{
-    @m_weakSelf;
+    @m_weakify(self);
     return ^(CGFloat m_right){
-        @m_strongSelf;
+        @m_strongify(self);
         [self mm_selfLayout].right = m_right;
         return self;
     };
 }
 -(UIView *(^)(CGFloat))m_width{
-    @m_weakSelf;
+    @m_weakify(self);
     return ^(CGFloat m_width){
-        @m_strongSelf;
+        @m_strongify(self);
         [self mm_selfLayout].width = m_width;
         return self;
     };
 }
 -(UIView *(^)(CGFloat))m_height{
-    @m_weakSelf;
+    @m_weakify(self);
     return ^(CGFloat m_height){
-        @m_strongSelf;
+        @m_strongify(self);
         [self mm_selfLayout].height = m_height;
         return self;
     };
 }
 -(UIView *(^)(CGSize))m_size{
-    @m_weakSelf;
+    @m_weakify(self);
     return ^(CGSize m_size){
-        @m_strongSelf;
+        @m_strongify(self);
         [self mm_selfLayout].size = m_size;
         return self;
     };
 }
 -(UIView *(^)())m_center{
-    @m_weakSelf;
+    @m_weakify(self);
     return ^{
-        @m_strongSelf;
+        @m_strongify(self);
         [[self mm_selfLayout] center];
         return self;
     };
@@ -246,69 +246,69 @@ const void *_layoutKey;
 
 #pragma mark -  m_equalTo
 -(UIView *(^)(UIView *))m_equalToFrame{
-    @m_weakSelf;
+    @m_weakify(self);
     return ^(UIView *obj){
-        @m_strongSelf;
+        @m_strongify(self);
         self.frame = obj.frame;
         return self;
     };
 }
 -(UIView *(^)(UIView *))m_equalToTop{
-    @m_weakSelf;
+    @m_weakify(self);
     return ^(UIView *obj){
-        @m_strongSelf;
+        @m_strongify(self);
         self.mm_selfLayout.top = obj.mm_selfLayout.top;
         return self;
     };
     
 }
 -(UIView *(^)(UIView *))m_equalToBottom{
-    @m_weakSelf;
+    @m_weakify(self);
     return ^(UIView *obj){
-        @m_strongSelf;
+        @m_strongify(self);
         self.mm_selfLayout.bottom = obj.mm_selfLayout.bottom;
         return self;
     };
 }
 -(UIView *(^)(UIView *))m_equalToLeft{
-    @m_weakSelf;
+    @m_weakify(self);
     return ^(UIView *obj){
-        @m_strongSelf;
+        @m_strongify(self);
         self.mm_selfLayout.left = obj.mm_selfLayout.left;
         return self;
     };
     
 }
 -(UIView *(^)(UIView *))m_equalToRight{
-    @m_weakSelf;
+    @m_weakify(self);
     return ^(UIView *obj){
-        @m_strongSelf;
+        @m_strongify(self);
         self.mm_selfLayout.right = obj.mm_selfLayout.right;
         return self;
     };
     
 }
 -(UIView *(^)(UIView *))m_equalToWidth{
-    @m_weakSelf;
+    @m_weakify(self);
     return ^(UIView *obj){
-        @m_strongSelf;
+        @m_strongify(self);
         self.mm_selfLayout.width = obj.mm_selfLayout.width;
         return self;
     };
 }
 
 -(UIView *(^)(UIView *))m_equalToHeight{
-    @m_weakSelf;
+    @m_weakify(self);
     return ^(UIView *obj){
-        @m_strongSelf;
+        @m_strongify(self);
         self.mm_selfLayout.height = obj.mm_selfLayout.height;
         return self;
     };
 }
 -(UIView *(^)(UIView *))m_equalToSize{
-    @m_weakSelf;
+    @m_weakify(self);
     return ^(UIView *obj){
-        @m_strongSelf;
+        @m_strongify(self);
         [self mm_selfLayout].size = obj.mm_selfLayout.size;
         return self;
     };
