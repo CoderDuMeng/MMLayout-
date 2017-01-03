@@ -32,7 +32,7 @@
     CGRect frame = self.frame;
     frame.size.height = mm_h;
     self.frame = frame;
-   
+    
 }
 - (CGFloat)mm_h{
     return self.frame.size.height;
@@ -71,7 +71,7 @@
     return self.mm_centerX / 2;
 }
 -(CGFloat)mm_halfCenterY{
-   return self.mm_centerY / 2;
+    return self.mm_centerY / 2;
 }
 -(void)setMm_size:(CGSize)mm_size{
     CGRect frame = self.frame;
@@ -109,7 +109,7 @@
 }
 -(void)setRight:(CGFloat)right{
     _right = right;
-   UIView *superview = self.layoutView.superview;
+    UIView *superview = self.layoutView.superview;
     self.layoutView.mm_x = superview.mm_w - self.layoutView.mm_w - right;
     !self.updateChangeBlock ? : self.updateChangeBlock(self.layoutView.frame);
 }
@@ -135,7 +135,7 @@
 -(void)setSize:(CGSize )size{
     self.layoutView.mm_size = size;
     !self.updateChangeBlock ? : self.updateChangeBlock(self.layoutView.frame);
-
+    
 }
 -(CGSize)size{
     return self.layoutView.mm_size;
@@ -176,17 +176,17 @@ const void *_layoutKey;
 
 
 -(UIView *(^)(CGFloat))m_top{
-    __weak typeof(self)_self = self;
+    @m_weakSelf;
     return ^(CGFloat m_top){
-        __strong typeof(_self)self = _self;
+        @m_strongSelf;
         [self mm_selfLayout].top = m_top;
-           return self;
+        return self;
     };
 }
 -(UIView *(^)(CGFloat))m_bottom{
-    __weak typeof(self)_self = self;
+    @m_weakSelf;
     return ^(CGFloat m_bottom){
-        __strong typeof(_self)self = _self;
+        @m_strongSelf;
         [self mm_selfLayout].bottom = m_bottom;
         return self;
     };
@@ -194,9 +194,9 @@ const void *_layoutKey;
 
 
 -(UIView *(^)(CGFloat))m_left{
-    __weak typeof(self)_self = self;
+    @m_weakSelf;
     return ^(CGFloat m_left){
-        __strong typeof(_self)self = _self;
+        @m_strongSelf;
         [self mm_selfLayout].left = m_left;
         return self;
     };
@@ -204,41 +204,41 @@ const void *_layoutKey;
 
 
 -(UIView *(^)(CGFloat))m_right{
-    __weak typeof(self)_self = self;
+    @m_weakSelf;
     return ^(CGFloat m_right){
-        __strong typeof(_self)self = _self;
+        @m_strongSelf;
         [self mm_selfLayout].right = m_right;
         return self;
     };
 }
 -(UIView *(^)(CGFloat))m_width{
-    __weak typeof(self)_self = self;
+    @m_weakSelf;
     return ^(CGFloat m_width){
-        __strong typeof(_self)self = _self;
+        @m_strongSelf;
         [self mm_selfLayout].width = m_width;
         return self;
     };
 }
 -(UIView *(^)(CGFloat))m_height{
-    __weak typeof(self)_self = self;
+    @m_weakSelf;
     return ^(CGFloat m_height){
-        __strong typeof(_self)self = _self;
+        @m_strongSelf;
         [self mm_selfLayout].height = m_height;
         return self;
     };
 }
 -(UIView *(^)(CGSize))m_size{
-    __weak typeof(self)_self = self;
+    @m_weakSelf;
     return ^(CGSize m_size){
-        __strong typeof(_self)self = _self;
+        @m_strongSelf;
         [self mm_selfLayout].size = m_size;
         return self;
     };
 }
 -(UIView *(^)())m_center{
-    __weak typeof(self)_self  = self;
+    @m_weakSelf;
     return ^{
-        __strong typeof(_self)self = _self;
+        @m_strongSelf;
         [[self mm_selfLayout] center];
         return self;
     };
@@ -246,73 +246,73 @@ const void *_layoutKey;
 
 #pragma mark -  m_equalTo
 -(UIView *(^)(UIView *))m_equalToFrame{
-    __weak typeof(self)_self  = self;
+    @m_weakSelf;
     return ^(UIView *obj){
-        __strong typeof(_self)self = _self;
+        @m_strongSelf;
         self.frame = obj.frame;
         return self;
     };
 }
 -(UIView *(^)(UIView *))m_equalToTop{
-    __weak typeof(self)_self  = self;
+    @m_weakSelf;
     return ^(UIView *obj){
-        __strong typeof(_self)self = _self;
+        @m_strongSelf;
         self.mm_selfLayout.top = obj.mm_selfLayout.top;
         return self;
     };
     
 }
 -(UIView *(^)(UIView *))m_equalToBottom{
-    __weak typeof(self)_self  = self;
+    @m_weakSelf;
     return ^(UIView *obj){
-        __strong typeof(_self)self = _self;
+        @m_strongSelf;
         self.mm_selfLayout.bottom = obj.mm_selfLayout.bottom;
         return self;
     };
 }
 -(UIView *(^)(UIView *))m_equalToLeft{
-    __weak typeof(self)_self  = self;
+    @m_weakSelf;
     return ^(UIView *obj){
-        __strong typeof(_self)self = _self;
+        @m_strongSelf;
         self.mm_selfLayout.left = obj.mm_selfLayout.left;
         return self;
     };
     
 }
 -(UIView *(^)(UIView *))m_equalToRight{
-    __weak typeof(self)_self  = self;
+    @m_weakSelf;
     return ^(UIView *obj){
-        __strong typeof(_self)self = _self;
+        @m_strongSelf;
         self.mm_selfLayout.right = obj.mm_selfLayout.right;
         return self;
     };
-
+    
 }
 -(UIView *(^)(UIView *))m_equalToWidth{
-    __weak typeof(self)_self  = self;
+    @m_weakSelf;
     return ^(UIView *obj){
-        __strong typeof(_self)self = _self;
+        @m_strongSelf;
         self.mm_selfLayout.width = obj.mm_selfLayout.width;
         return self;
     };
 }
 
 -(UIView *(^)(UIView *))m_equalToHeight{
-    __weak typeof(self)_self  = self;
+    @m_weakSelf;
     return ^(UIView *obj){
-        __strong typeof(_self)self = _self;
+        @m_strongSelf;
         self.mm_selfLayout.height = obj.mm_selfLayout.height;
         return self;
     };
 }
 -(UIView *(^)(UIView *))m_equalToSize{
-    __weak typeof(self)_self  = self;
+    @m_weakSelf;
     return ^(UIView *obj){
-        __strong typeof(_self)self = _self;
+        @m_strongSelf;
         [self mm_selfLayout].size = obj.mm_selfLayout.size;
         return self;
     };
-
+    
 }
 
 

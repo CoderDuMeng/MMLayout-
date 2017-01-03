@@ -4,8 +4,11 @@
 //
 /* 
  杜蒙 iOS开发 
- Demo du 
+ Demo du
 */
+
+#define m_weakSelf   autoreleasepool {} __weak typeof(self)mm_self_ = self
+#define m_strongSelf autoreleasepool {} __strong typeof(mm_self_)self = mm_self_
 
 
 
