@@ -2,7 +2,76 @@
 
 #import "UIView+MMLayout.h"
 #import <objc/runtime.h>
-@implementation UIView (MM)
+
+#pragma mark - MMLayout
+@interface MMLayout : NSObject
+/*
+ @LayoutView   传入进去  View
+ */
+-(instancetype)initWithLayoutView:(UIView *)LayoutView;
+@property (assign , nonatomic) CGFloat top;    ///<<  frame y
+@property (assign , nonatomic) CGFloat bottom; ///<<  y = super.h - LayoutView.h - bottom
+@property (assign , nonatomic) CGFloat left;   ///<<  frame x
+@property (assign , nonatomic) CGFloat right;  ///<<  x = super.w - LayoutView.h - right
+@property (assign , nonatomic) CGFloat width;  ///<<  frame w
+@property (assign , nonatomic) CGFloat height; ///<<  frame height
+@property (assign , nonatomic) CGSize  size;   ///<<  frame bounds size  width height
+@property (assign , nonatomic) CGPoint point;  ///<<  frame point
+- (void)center; ///<<调用此方法前必须先设置自己的宽高   (默认是居中父控件)
+@property (weak   , nonatomic) UIView *layoutView;
+@end
+@implementation MMLayout
+-(instancetype)initWithLayoutView:(UIView *)LayoutView{
+    if (self=[super init]) {
+        self.layoutView = LayoutView;
+    }
+    return self;
+}
+-(void)setLeft:(CGFloat)left{
+    _left = left;
+    self.layoutView.mm_x = left;
+}
+-(void)setTop:(CGFloat)top{
+    _top = top;
+    self.layoutView.mm_y = top;
+}
+-(void)setRight:(CGFloat)right{
+    _right = right;
+    UIView *superview = self.layoutView.superview;
+    self.layoutView.mm_x = superview.mm_w - self.layoutView.mm_w - right;
+}
+-(void)setBottom:(CGFloat)bottom{
+    _bottom = bottom;
+    UIView *superview = self.layoutView.superview;
+    self.layoutView.mm_y =  superview.mm_h - self.layoutView.mm_h - bottom;
+}
+
+-(void)setHeight:(CGFloat)height{
+    _height = height;
+    self.layoutView.mm_h  = height;
+}
+-(void)setWidth:(CGFloat)width{
+    _width = width;
+    self.layoutView.mm_w = width;
+}
+-(void)setPoint:(CGPoint)point{
+    _point = point;
+    self.layoutView.mm_center =  point;
+}
+-(void)setSize:(CGSize )size{
+    self.layoutView.mm_size = size;
+}
+-(CGSize)size{
+    return self.layoutView.mm_size;
+}
+-(void)center{
+    UIView *superview = self.layoutView.superview;
+    self.layoutView.mm_x = superview.mm_halfW - self.layoutView.mm_halfW;
+    self.layoutView.mm_y = superview.mm_halfH - self.layoutView.mm_halfH;
+}
+@end
+const void *_layoutKey;
+@implementation UIView (Layout)
 #pragma mark - frame
 - (void)setMm_x:(CGFloat)mm_x{
     CGRect frame = self.frame;
@@ -36,6 +105,15 @@
 }
 - (CGFloat)mm_h{
     return self.frame.size.height;
+}
+-(void)setMm_center:(CGPoint)mm_center{
+    CGRect frame = self.frame;
+    frame.origin = mm_center;
+    self.frame = frame;
+    self.center = mm_center;
+}
+-(CGPoint)mm_center{
+    return self.frame.origin;
 }
 -(CGFloat)mm_centerX{
     return self.center.x;
@@ -81,90 +159,13 @@
 -(CGSize)mm_size{
     return self.bounds.size;
 }
-
-@end
-#pragma mark - MMLayout
-
-@interface MMLayout()
-@property (copy   , nonatomic) void(^updateChangeBlock)(CGRect frame);
-@property (weak   , nonatomic) UIView *layoutView;
-@end
-
-@implementation MMLayout
--(instancetype)initWithLayoutView:(UIView *)LayoutView{
-    if (self=[super init]) {
-        self.layoutView = LayoutView;
-    }
-    return self;
-}
--(void)setLeft:(CGFloat)left{
-    _left = left;
-    self.layoutView.mm_x = left;
-    !self.updateChangeBlock ? : self.updateChangeBlock(self.layoutView.frame);
-}
--(void)setTop:(CGFloat)top{
-    _top = top;
-    self.layoutView.mm_y = top;
-    !self.updateChangeBlock ? : self.updateChangeBlock(self.layoutView.frame);
-}
--(void)setRight:(CGFloat)right{
-    _right = right;
-    UIView *superview = self.layoutView.superview;
-    self.layoutView.mm_x = superview.mm_w - self.layoutView.mm_w - right;
-    !self.updateChangeBlock ? : self.updateChangeBlock(self.layoutView.frame);
-}
-
--(void)setBottom:(CGFloat)bottom{
-    _bottom = bottom;
-    UIView *superview = self.layoutView.superview;
-    self.layoutView.mm_y =  superview.mm_h - self.layoutView.mm_h - bottom;
-    !self.updateChangeBlock ? : self.updateChangeBlock(self.layoutView.frame);
-}
-
--(void)setHeight:(CGFloat)height{
-    _height = height;
-    self.layoutView.mm_h  = height;
-    !self.updateChangeBlock ? : self.updateChangeBlock(self.layoutView.frame);
-}
--(void)setWidth:(CGFloat)width{
-    _width = width;
-    self.layoutView.mm_w = width;
-    !self.updateChangeBlock ? : self.updateChangeBlock(self.layoutView.frame);
-}
-
--(void)setSize:(CGSize )size{
-    self.layoutView.mm_size = size;
-    !self.updateChangeBlock ? : self.updateChangeBlock(self.layoutView.frame);
-    
-}
--(CGSize)size{
-    return self.layoutView.mm_size;
-}
-
--(void)center{
-    UIView *superview = self.layoutView.superview;
-    self.layoutView.mm_x = superview.mm_halfW - self.layoutView.mm_halfW;
-    self.layoutView.mm_y = superview.mm_halfH - self.layoutView.mm_halfH;
-    !self.updateChangeBlock ? : self.updateChangeBlock(self.layoutView.frame);
-    
-}
-@end
-const void *_layoutKey;
-@implementation UIView (Layout)
-
 #pragma mark - set_ frame
-
--(void)make_LayoutUpdateChange:(void (^)(CGRect))block{
-    [self mm_selfLayout].updateChangeBlock = block;
-}
-
 -(void)make_Layout:(void (^)(MMLayout *))layout{
     if (layout) {
         MMLayout *mm_Layout = [[MMLayout alloc] initWithLayoutView:self];
         layout(mm_Layout);
     }
 }
-
 - (MMLayout *)mm_selfLayout{
     MMLayout *layout = objc_getAssociatedObject(self, &_layoutKey);
     if (layout == nil) {
@@ -173,8 +174,6 @@ const void *_layoutKey;
     }
     return layout;
 }
-
-
 -(UIView *(^)(CGFloat))m_top{
     @m_weakify(self);
     return ^(CGFloat m_top){
@@ -191,8 +190,6 @@ const void *_layoutKey;
         return self;
     };
 }
-
-
 -(UIView *(^)(CGFloat))m_left{
     @m_weakify(self);
     return ^(CGFloat m_left){
@@ -201,8 +198,6 @@ const void *_layoutKey;
         return self;
     };
 }
-
-
 -(UIView *(^)(CGFloat))m_right{
     @m_weakify(self);
     return ^(CGFloat m_right){
@@ -234,6 +229,15 @@ const void *_layoutKey;
         [self mm_selfLayout].size = m_size;
         return self;
     };
+}
+- (UIView *(^)(CGPoint))m__center{
+    @m_weakify(self);
+    return ^(CGPoint m__center){
+        @m_strongify(self);
+        [self mm_selfLayout].point = m__center;
+        return self;
+    };
+
 }
 -(UIView *(^)())m_center{
     @m_weakify(self);
@@ -296,7 +300,6 @@ const void *_layoutKey;
         return self;
     };
 }
-
 -(UIView *(^)(UIView *))m_equalToHeight{
     @m_weakify(self);
     return ^(UIView *obj){
@@ -312,11 +315,15 @@ const void *_layoutKey;
         [self mm_selfLayout].size = obj.mm_selfLayout.size;
         return self;
     };
-    
 }
-
-
-
+- (UIView *(^)(UIView *))m_equalToCenter{
+    @m_weakify(self);
+    return ^(UIView *obj){
+        @m_strongify(self);
+        [self mm_selfLayout].point = obj.mm_selfLayout.point;
+        return self;
+    };
+}
 @end
 
 
