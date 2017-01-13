@@ -61,6 +61,11 @@
 - (UIView * (^)(UIView *obj))m_equalToSize;    ///  equalTo size
 - (UIView * (^)(UIView *obj))m_equalToCenter;  ///  equalTo center
 
+
+- (NSData *)mm_createPDF;/// create self PDF
+
+- (UIViewController *)viewController;  //self Responder UIViewControler  
+
 @end
 
 
