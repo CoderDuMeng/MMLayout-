@@ -15,7 +15,7 @@
 ```
 给View发送一个make_Layout block传入进去一个MMLayout 对象 设置相关值 
   
-###链接方式编写 
+##链接方式编写 
 ```objc 
 
     UIView *newView = [UIView new];
@@ -23,7 +23,7 @@
     newView.m_height(50).m_width(100).m_right(10).m_top(10);
 
 ```
-###父类居中  
+##父类居中  
 ```objc
 
     设置父类居中前提是自己本身有宽度和高度
@@ -33,7 +33,7 @@
 
 ```
 
-###相同设置 
+##相同设置 
 ```objc
 
     UIView *redView = [UIView new];  
