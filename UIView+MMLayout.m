@@ -29,11 +29,16 @@
 }
 -(void)setLeft:(CGFloat)left{
     _left = left;
-    self.layoutView.mm_x = left;
+    CGRect frame = self.layoutView.frame;
+    frame.origin.x = left;
+    self.layoutView.frame = frame;
+    
 }
 -(void)setTop:(CGFloat)top{
     _top = top;
-    self.layoutView.mm_y = top;
+    CGRect frame = self.layoutView.frame;
+    frame.origin.y = top;
+    self.layoutView.frame = frame;
 }
 -(void)setRight:(CGFloat)right{
     _right = right;
@@ -48,22 +53,34 @@
 
 -(void)setHeight:(CGFloat)height{
     _height = height;
-    self.layoutView.mm_h  = height;
+    CGRect frame = self.layoutView.frame;
+    frame.size.height = height;
+    self.layoutView.frame = frame;
 }
 -(void)setWidth:(CGFloat)width{
     _width = width;
-    self.layoutView.mm_w = width;
+    CGRect frame = self.layoutView.frame;
+    frame.size.width = width;
+    self.layoutView.frame = frame;
+    
 }
 -(void)setPoint:(CGPoint)point{
-    _point = point;
-    self.layoutView.mm_center =  point;
+    CGRect frame = self.layoutView.frame;
+    frame.origin = point;
+    self.layoutView.frame = frame;
+}
+-(CGPoint)point{
+    return CGPointMake(self.layoutView.mm_x, self.layoutView.mm_w);
 }
 -(void)setSize:(CGSize )size{
-    self.layoutView.mm_size = size;
+    CGRect frame = self.layoutView.frame;
+    frame.size = size;
+    self.layoutView.frame = frame;
 }
 -(CGSize)size{
     return self.layoutView.mm_size;
 }
+
 -(void)center{
     UIView *superview = self.layoutView.superview;
     self.layoutView.mm_x = superview.mm_halfW - self.layoutView.mm_halfW;
@@ -74,43 +91,32 @@ const void *_layoutKey;
 @implementation UIView (Layout)
 #pragma mark - frame
 - (void)setMm_x:(CGFloat)mm_x{
-    CGRect frame = self.frame;
-    frame.origin.x = mm_x;
-    self.frame = frame;
+   [self mm_selfLayout].left = mm_x;
 }
 - (CGFloat)mm_x{
     return self.frame.origin.x;
 }
 - (void)setMm_y:(CGFloat)mm_y{
-    CGRect frame = self.frame;
-    frame.origin.y = mm_y;
-    self.frame = frame;
+    [self mm_selfLayout].top = mm_y;
 }
 - (CGFloat)mm_y{
     return self.frame.origin.y;
 }
 - (void)setMm_w:(CGFloat)mm_w{
-    CGRect frame = self.frame;
-    frame.size.width = mm_w;
-    self.frame = frame;
+    [self mm_selfLayout].width = mm_w;
 }
 - (CGFloat)mm_w{
     return self.frame.size.width;
 }
 - (void)setMm_h:(CGFloat)mm_h{
-    CGRect frame = self.frame;
-    frame.size.height = mm_h;
-    self.frame = frame;
-    
+    [self mm_selfLayout].height = mm_h;
 }
 - (CGFloat)mm_h{
     return self.frame.size.height;
 }
 -(void)setMm_center:(CGPoint)mm_center{
-    CGRect frame = self.frame;
-    frame.origin = mm_center;
-    self.frame = frame;
-    self.center = mm_center;
+    [self mm_selfLayout].point = mm_center;
+    
 }
 -(CGPoint)mm_center{
     return self.frame.origin;
@@ -152,20 +158,12 @@ const void *_layoutKey;
     return self.mm_centerY / 2;
 }
 -(void)setMm_size:(CGSize)mm_size{
-    CGRect frame = self.frame;
-    frame.size = mm_size;
-    self.frame = frame;
+    [self mm_selfLayout].size = mm_size;
 }
 -(CGSize)mm_size{
     return self.bounds.size;
 }
 #pragma mark - set_ frame
--(void)make_Layout:(void (^)(MMLayout *))layout{
-    if (layout) {
-        MMLayout *mm_Layout = [[MMLayout alloc] initWithLayoutView:self];
-        layout(mm_Layout);
-    }
-}
 - (MMLayout *)mm_selfLayout{
     MMLayout *layout = objc_getAssociatedObject(self, &_layoutKey);
     if (layout == nil) {

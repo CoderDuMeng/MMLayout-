@@ -5,7 +5,7 @@
 */
 
 #define m_weakify(object) autoreleasepool   {} __weak  typeof(object) weak##object = object
-#define m_strongify(object) autoreleasepool {} __weak  typeof(weak##object) object = weak##object
+#define m_strongify(object) autoreleasepool {} __strong  typeof(weak##object) object = weak##object
 
 #import <UIKit/UIKit.h>
 @class MMLayout;
