@@ -18,6 +18,8 @@
 @property (assign , nonatomic) CGSize  size;   ///<<  frame bounds size  width height
 @property (assign , nonatomic) CGPoint point;  ///<<  frame point
 - (void)center; ///<<调用此方法前必须先设置自己的宽高   (默认是居中父控件)
+- (void)centerX; ///<<调用此方法前必须先设置自己的宽   (默认是居中父控件)
+- (void)centerY; ///<<调用此方法前必须先设置自己的高   (默认是居中父控件)
 @property (weak   , nonatomic) UIView *layoutView;
 @end
 @implementation MMLayout
@@ -28,11 +30,12 @@
     return self;
 }
 -(void)setLeft:(CGFloat)left{
-    _left = left;
     CGRect frame = self.layoutView.frame;
     frame.origin.x = left;
     self.layoutView.frame = frame;
-    
+}
+- (CGFloat)left {
+    return self.layoutView.frame.origin.x;
 }
 -(void)setTop:(CGFloat)top{
     _top = top;
@@ -41,10 +44,14 @@
     self.layoutView.frame = frame;
 }
 -(void)setRight:(CGFloat)right{
-    _right = right;
     UIView *superview = self.layoutView.superview;
     self.layoutView.mm_x = superview.mm_w - self.layoutView.mm_w - right;
 }
+- (CGFloat)right {
+    UIView *superview = self.layoutView.superview;
+    return superview.mm_w - self.layoutView.mm_x - self.layoutView.mm_w;
+}
+
 -(void)setBottom:(CGFloat)bottom{
     _bottom = bottom;
     UIView *superview = self.layoutView.superview;
@@ -62,7 +69,6 @@
     CGRect frame = self.layoutView.frame;
     frame.size.width = width;
     self.layoutView.frame = frame;
-    
 }
 -(void)setPoint:(CGPoint)point{
     CGRect frame = self.layoutView.frame;
@@ -85,6 +91,14 @@
     UIView *superview = self.layoutView.superview;
     self.layoutView.mm_x = superview.mm_halfW - self.layoutView.mm_halfW;
     self.layoutView.mm_y = superview.mm_halfH - self.layoutView.mm_halfH;
+}
+-(void)centerY{
+    UIView *superview = self.layoutView.superview;
+    self.layoutView.mm_y = superview.mm_halfH - self.layoutView.mm_halfH;
+}
+-(void)centerX{
+    UIView *superview = self.layoutView.superview;
+    self.layoutView.mm_x = superview.mm_halfW - self.layoutView.mm_halfW;
 }
 @end
 const void *_layoutKey;
@@ -180,11 +194,30 @@ const void *_layoutKey;
         return self;
     };
 }
+-(UIView *(^)(CGFloat))m_flexToTop{
+    @m_weakify(self);
+    return ^(CGFloat m_flexToTop){
+        @m_strongify(self);
+        CGFloat top = [self mm_selfLayout].top;
+        [self mm_selfLayout].top = m_flexToTop;
+        [self mm_selfLayout].height += top-m_flexToTop;
+        return self;
+    };
+}
 -(UIView *(^)(CGFloat))m_bottom{
     @m_weakify(self);
     return ^(CGFloat m_bottom){
         @m_strongify(self);
         [self mm_selfLayout].bottom = m_bottom;
+        return self;
+    };
+}
+-(UIView *(^)(CGFloat))m_flexToBottom{
+    @m_weakify(self);
+    return ^(CGFloat m_flexToBottom){
+        @m_strongify(self);
+        CGFloat bottom = [self mm_selfLayout].bottom;
+        [self mm_selfLayout].height += bottom-m_flexToBottom;
         return self;
     };
 }
@@ -196,11 +229,30 @@ const void *_layoutKey;
         return self;
     };
 }
+-(UIView *(^)(CGFloat))m_flexToLeft{
+    @m_weakify(self);
+    return ^(CGFloat m_flexToLeft){
+        @m_strongify(self);
+        CGFloat left = [self mm_selfLayout].left;
+        [self mm_selfLayout].left = m_flexToLeft;
+        [self mm_selfLayout].width += left-m_flexToLeft;
+        return self;
+    };
+}
 -(UIView *(^)(CGFloat))m_right{
     @m_weakify(self);
     return ^(CGFloat m_right){
         @m_strongify(self);
         [self mm_selfLayout].right = m_right;
+        return self;
+    };
+}
+-(UIView *(^)(CGFloat))m_flexToRight{
+    @m_weakify(self);
+    return ^(CGFloat m_flexToRight){
+        @m_strongify(self);
+        CGFloat right = [self mm_selfLayout].right;
+        [self mm_selfLayout].width += right-m_flexToRight;
         return self;
     };
 }
@@ -242,6 +294,24 @@ const void *_layoutKey;
     return ^{
         @m_strongify(self);
         [[self mm_selfLayout] center];
+        return self;
+    };
+}
+
+-(UIView *(^)())m_centerY{
+    @m_weakify(self);
+    return ^{
+        @m_strongify(self);
+        [[self mm_selfLayout] centerY];
+        return self;
+    };
+}
+
+-(UIView *(^)())m_centerX{
+    @m_weakify(self);
+    return ^{
+        @m_strongify(self);
+        [[self mm_selfLayout] centerX];
         return self;
     };
 }
