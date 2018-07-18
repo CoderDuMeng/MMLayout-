@@ -28,41 +28,54 @@
     return self;
 }
 -(void)setLeft:(CGFloat)left{
-    _left = left;
     CGRect frame = self.layoutView.frame;
     frame.origin.x = left;
     self.layoutView.frame = frame;
     
 }
+-(CGFloat)left{
+    return self.layoutView.frame.origin.x;
+}
 -(void)setTop:(CGFloat)top{
-    _top = top;
     CGRect frame = self.layoutView.frame;
     frame.origin.y = top;
     self.layoutView.frame = frame;
 }
+- (CGFloat)top{
+    return self.layoutView.frame.origin.y;
+}
 -(void)setRight:(CGFloat)right{
-    _right = right;
+    
     UIView *superview = self.layoutView.superview;
     self.layoutView.mm_x = superview.mm_w - self.layoutView.mm_w - right;
 }
+-(CGFloat)right{
+    CGRect superFrame = self.layoutView.superview.frame;
+    return superFrame.size.width - self.layoutView.mm_maxX;
+}
 -(void)setBottom:(CGFloat)bottom{
-    _bottom = bottom;
     UIView *superview = self.layoutView.superview;
     self.layoutView.mm_y =  superview.mm_h - self.layoutView.mm_h - bottom;
 }
-
+-(CGFloat)bottom{
+    CGRect superFrame = self.layoutView.superview.frame;
+    return superFrame.size.height - self.layoutView.mm_maxY;
+}
 -(void)setHeight:(CGFloat)height{
-    _height = height;
     CGRect frame = self.layoutView.frame;
     frame.size.height = height;
     self.layoutView.frame = frame;
 }
+-(CGFloat)height{
+    return self.layoutView.frame.size.height;
+}
 -(void)setWidth:(CGFloat)width{
-    _width = width;
     CGRect frame = self.layoutView.frame;
     frame.size.width = width;
     self.layoutView.frame = frame;
-    
+}
+-(CGFloat)width{
+    return self.layoutView.frame.size.width;
 }
 -(void)setPoint:(CGPoint)point{
     CGRect frame = self.layoutView.frame;
@@ -70,7 +83,7 @@
     self.layoutView.frame = frame;
 }
 -(CGPoint)point{
-    return CGPointMake(self.layoutView.mm_x, self.layoutView.mm_w);
+    return self.layoutView.frame.origin; 
 }
 -(void)setSize:(CGSize )size{
     CGRect frame = self.layoutView.frame;
