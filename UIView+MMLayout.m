@@ -53,9 +53,13 @@
 }
 
 -(void)setBottom:(CGFloat)bottom{
-    _bottom = bottom;
     UIView *superview = self.layoutView.superview;
     self.layoutView.mm_y =  superview.mm_h - self.layoutView.mm_h - bottom;
+}
+
+- (CGFloat)bottom {
+    UIView *superview = self.layoutView.superview;
+    return superview.mm_h - self.layoutView.mm_maxY;
 }
 
 -(void)setHeight:(CGFloat)height{

@@ -1,7 +1,8 @@
 //
 //  UIView+MM.h
 /*
- 杜蒙 iOS开发 
+ 杜蒙 iOS开发
+ annidy
 */
 
 #define m_weakify(object) autoreleasepool   {} __weak  typeof(object) weak##object = object
