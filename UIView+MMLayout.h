@@ -11,29 +11,30 @@
 #import <UIKit/UIKit.h>
 @class MMLayout;
 @interface UIView (Layout)
-@property (strong , nonatomic ,  readonly) MMLayout *mm_selfLayout;
-- (void)setMm_x:(CGFloat)mm_x; ///<< set frame.x
-- (CGFloat)mm_x;            ///<< get frame.x
-- (void)setMm_y:(CGFloat)mm_y; ///<< set frame.y
-- (CGFloat)mm_y;            ///<< get frame.y
-- (void)setMm_w:(CGFloat)mm_w; ///<< set frame.bounds.size.width
-- (CGFloat)mm_w;            ///<< get frame.bounds.size.width
-- (void)setMm_h:(CGFloat)mm_h; ///<< set frame.bounds.size.height
-- (CGFloat)mm_h;            ///<< get frame.bounds.size.height
-- (CGFloat)mm_centerX;      ///<< get self.center.x
-- (CGFloat)mm_centerY;      ///<< get self.center.y
-- (CGFloat)mm_maxY;         ///<< get CGRectGetMaxY
-- (CGFloat)mm_minY;         ///<< get CGRectGetMinY
-- (CGFloat)mm_maxX;         ///<< get CGRectGetMaxX
-- (CGFloat)mm_minX;         ///<< get CGRectGetMinX
-- (CGFloat)mm_halfW;        ///<< get self.width / 2
-- (CGFloat)mm_halfH;        ///<< get self.height / 2
-- (CGFloat)mm_halfX;        ///<< get self.x / 2
-- (CGFloat)mm_halfY;        ///<< get self.y / 2
-- (CGFloat)mm_halfCenterX;  ///<< get self.centerX / 2
-- (CGFloat)mm_halfCenterY;  ///<< get self.centerY / 2
-- (void)setMm_size:(CGSize)mm_size;
-- (CGSize)mm_size;       ///<< get self.bounds.size
+@property (strong , nonatomic, readonly) MMLayout *mm_selfLayout;
+
+@property (nonatomic) CGFloat mm_x;            ///<< frame.x
+@property (nonatomic) CGFloat mm_y;            ///<< frame.y
+@property (nonatomic) CGFloat mm_w;            ///<< frame.bounds.size.width
+@property (nonatomic) CGFloat mm_h;            ///<< frame.bounds.size.height
+@property (nonatomic) CGSize mm_size;          ///<< self.bounds.size
+
+@property (readonly) CGFloat mm_centerX;      ///<< get self.center.x
+@property (readonly) CGFloat mm_centerY;      ///<< get self.center.y
+@property (readonly) CGFloat mm_maxY;         ///<< get CGRectGetMaxY
+@property (readonly) CGFloat mm_minY;         ///<< get CGRectGetMinY
+@property (readonly) CGFloat mm_maxX;         ///<< get CGRectGetMaxX
+@property (readonly) CGFloat mm_minX;         ///<< get CGRectGetMinX
+@property (readonly) CGFloat mm_halfW;        ///<< get self.width / 2
+@property (readonly) CGFloat mm_halfH;        ///<< get self.height / 2
+@property (readonly) CGFloat mm_halfX;        ///<< get self.x / 2
+@property (readonly) CGFloat mm_halfY;        ///<< get self.y / 2
+
+@property (readonly) CGFloat mm_halfCenterX;  ///<< get self.centerX / 2
+@property (readonly) CGFloat mm_halfCenterY;  ///<< get self.centerY / 2
+
+@property (readonly) UIView *mm_sibling;  //兄弟视图
+@property (readonly) UIViewController *mm_viewController;  //self Responder UIViewControler
 
 /*
    示例链接编程
@@ -44,7 +45,7 @@
 - (UIView * (^)(CGFloat bottom))m_bottom;      ///< 底部距离，必须先设置好height
 - (UIView * (^)(CGFloat right))m_flexToBottom; ///< set frame y by change height
 - (UIView * (^)(CGFloat left))m_left;          ///< set frame x
-- (UIView * (^)(CGFloat right))m_flexToLeft;   ///< set frame right by chang width
+- (UIView * (^)(CGFloat left))m_flexToLeft;   ///< set frame right by chang width
 - (UIView * (^)(CGFloat right))m_right;        ///< 右侧距离，必须先设置好width
 - (UIView * (^)(CGFloat right))m_flexToRight;  ///< set frame right by chang width
 - (UIView * (^)(CGFloat width))m_width;        ///< set frame width
@@ -54,9 +55,12 @@
 - (UIView * (^)(CGFloat x))m__centerX;      ///< set frame point
 - (UIView * (^)(CGFloat y))m__centerY;      ///< set frame point
 
-- (UIView * (^)(void))m_center;                 ///< 居中  前提是有w h 调用次方法居中父类
-- (UIView * (^)(void))m_centerY;                ///< Y居中  前提是有h调用次方法居中父类
-- (UIView * (^)(void))m_centerX;                ///< X居中  前提是有w调用次方法居中父类
+/*
+    相对父View
+ */
+- (UIView * (^)(void))m_center;                 ///< 居中  前提是有w h
+- (UIView * (^)(void))m_centerY;                ///< Y居中  前提是有h
+- (UIView * (^)(void))m_centerX;                ///< X居中  前提是有w
 
 
 - (UIView * (^)(UIView *obj))m_equalToFrame;   ///  equalTo frame
@@ -69,11 +73,15 @@
 - (UIView * (^)(UIView *obj))m_equalToSize;    ///  equalTo size
 - (UIView * (^)(UIView *obj))m_equalToCenter;  ///  equalTo center
 
+/*
+    相对与兄弟节点，线性布局
+ */
+- (UIView * (^)(CGFloat space))m_hstack;                 ///< 水平，居中对齐
+- (UIView * (^)(CGFloat space))m_vstack;                 ///< 垂直，居中对齐
+
 - (UIView * (^)(void))m_sizeToFit;
 
 - (NSData *)mm_createPDF;/// create self PDF
-
-- (UIViewController *)viewController;  //self Responder UIViewControler  
 
 @end
 

@@ -433,6 +433,34 @@ const void *_layoutKey;
     };
 }
 
+- (UIView * (^)(CGFloat space))m_hstack {
+    @m_weakify(self);
+    return ^(CGFloat space) {
+        @m_strongify(self);
+        if (self.mm_sibling) {
+            self.m__centerY(self.mm_sibling.mm_centerY).m_left(self.mm_sibling.mm_maxX+space);
+        }
+        return self;
+    };
+}
+
+- (UIView * (^)(CGFloat space))m_vstack {
+    @m_weakify(self);
+    return ^(CGFloat space) {
+        @m_strongify(self);
+        if (self.mm_sibling) {
+            self.m__centerX(self.mm_sibling.mm_centerX).m_top(self.mm_sibling.mm_maxY+space);
+        }
+        return self;
+    };
+}
+
+- (UIView *)mm_sibling {
+    NSUInteger idx = [self.superview.subviews indexOfObject:self];
+    if (idx == 0 || idx == NSNotFound)
+        return nil;
+    return self.superview.subviews[idx-1];
+}
 
 - (NSData *)mm_createPDF{
     CGRect bounds = self.bounds;
@@ -451,7 +479,7 @@ const void *_layoutKey;
     return data;
 }
 
-- (UIViewController *)viewController {
+- (UIViewController *)mm_viewController {
     UIView *view = self;
     while (view) {
         UIResponder *nextResponder = [view nextResponder];
