@@ -46,6 +46,26 @@
 
 ```
 
+### 线性布局
+```objc
+    UIView *redView = [UIView new];  
+    [self.view addSubview:redView]; 
+
+    UIView *redView1 = [UIView new];  
+    [self.view addSubview:redView1];  
+
+    UIView *redView2 = [UIView new];  
+    [self.view addSubview:redView2]; 
+
+    UIView *redView3 = [UIView new];  
+    [self.view addSubview:redView3]; 
+
+    redView.m_left(10).m_top(10).m_size(CGSize(50,50)); 
+    redView1.m_equalToSize(redView).m_hstack(10); 
+    redView2.m_equalToSize(redView).m_hstack(10); 
+    redView3.m_equalToSize(redView).m_hstack(10); 
+```
+
 
 以上就是简单的使用方式 链接方式 和block的方式 
 
