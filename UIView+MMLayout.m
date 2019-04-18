@@ -45,7 +45,7 @@
 }
 -(void)setRight:(CGFloat)right{
     UIView *superview = self.layoutView.superview;
-    NSAssert(self.layoutView.mm_w, @"must set width first");
+    NSAssert(self.layoutView.mm_w > 0, @"must set width first");
     self.layoutView.mm_x = superview.mm_w - self.layoutView.mm_w - right;
 }
 - (CGFloat)right {
@@ -55,7 +55,7 @@
 
 -(void)setBottom:(CGFloat)bottom{
     UIView *superview = self.layoutView.superview;
-    NSAssert(self.layoutView.mm_h, @"must set height first");
+    NSAssert(self.layoutView.mm_h > 0, @"must set height first");
     self.layoutView.mm_y =  superview.mm_h - self.layoutView.mm_h - bottom;
 }
 
@@ -94,19 +94,19 @@
 }
 
 -(void)center{
-    NSAssert(self.layoutView.mm_h, @"must set height first");
-    NSAssert(self.layoutView.mm_w, @"must set width first");
+    NSAssert(self.layoutView.mm_h > 0, @"must set height first");
+    NSAssert(self.layoutView.mm_w > 0, @"must set width first");
     UIView *superview = self.layoutView.superview;
     self.layoutView.mm_x = superview.mm_halfW - self.layoutView.mm_halfW;
     self.layoutView.mm_y = superview.mm_halfH - self.layoutView.mm_halfH;
 }
 -(void)centerY{
-    NSAssert(self.layoutView.mm_h, @"must set height first");
+    NSAssert(self.layoutView.mm_h > 0, @"must set height first");
     UIView *superview = self.layoutView.superview;
     self.layoutView.mm_y = superview.mm_halfH - self.layoutView.mm_halfH;
 }
 -(void)centerX{
-    NSAssert(self.layoutView.mm_w, @"must set width first");
+    NSAssert(self.layoutView.mm_w > 0, @"must set width first");
     UIView *superview = self.layoutView.superview;
     self.layoutView.mm_x = superview.mm_halfW - self.layoutView.mm_halfW;
 }
@@ -347,15 +347,34 @@ const void *_layoutKey;
     };
 }
 
-#pragma mark -  m_equalTo
--(UIView *(^)(UIView *))m_equalToFrame{
+-(UIView *(^)(void))m_superWidth{
     @m_weakify(self);
-    return ^(UIView *obj){
+    return ^{
         @m_strongify(self);
-        self.frame = obj.frame;
+        [self mm_selfLayout].width = self.superview.frame.size.width;
         return self;
     };
 }
+
+-(UIView *(^)(void))m_superHeight{
+    @m_weakify(self);
+    return ^{
+        @m_strongify(self);
+        [self mm_selfLayout].height = self.superview.frame.size.height;
+        return self;
+    };
+}
+
+-(UIView *(^)(void))m_superSize{
+    @m_weakify(self);
+    return ^{
+        @m_strongify(self);
+        [self mm_selfLayout].size = self.superview.frame.size;
+        return self;
+    };
+}
+
+#pragma mark -  m_equalTo
 -(UIView *(^)(UIView *))m_equalToTop{
     @m_weakify(self);
     return ^(UIView *obj){
@@ -462,23 +481,6 @@ const void *_layoutKey;
     return self.superview.subviews[idx-1];
 }
 
-- (NSData *)mm_createPDF{
-    CGRect bounds = self.bounds;
-    NSMutableData *data = [NSMutableData data];
-    CGDataConsumerRef consumer = CGDataConsumerCreateWithCFData((__bridge CFMutableDataRef)data);
-    CGContextRef context = CGPDFContextCreate(consumer, &bounds, NULL);
-    CGDataConsumerRelease(consumer);
-    if (!context) return nil;
-    CGPDFContextBeginPage(context, NULL);
-    CGContextTranslateCTM(context, 0, bounds.size.height);
-    CGContextScaleCTM(context, 1.0, -1.0);
-    [self.layer renderInContext:context];
-    CGPDFContextEndPage(context);
-    CGPDFContextClose(context);
-    CGContextRelease(context);
-    return data;
-}
-
 - (UIViewController *)mm_viewController {
     UIView *view = self;
     while (view) {
@@ -490,8 +492,6 @@ const void *_layoutKey;
       }
     return nil;
 }
-
-
 
 @end
 

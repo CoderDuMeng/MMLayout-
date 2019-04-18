@@ -61,9 +61,13 @@
 - (UIView * (^)(void))m_center;                 ///< 居中  前提是有w h
 - (UIView * (^)(void))m_centerY;                ///< Y居中  前提是有h
 - (UIView * (^)(void))m_centerX;                ///< X居中  前提是有w
+- (UIView * (^)(void))m_superWidth;             ///< 等宽
+- (UIView * (^)(void))m_superHeight;            ///< 等高
+- (UIView * (^)(void))m_superSize;              ///< 等Size
 
-
-- (UIView * (^)(UIView *obj))m_equalToFrame;   ///  equalTo frame
+/*
+    相对与其它View
+ */
 - (UIView * (^)(UIView *obj))m_equalToTop;     ///  equalTo top
 - (UIView * (^)(UIView *obj))m_equalToBottom;  ///  equalTo Bottom
 - (UIView * (^)(UIView *obj))m_equalToLeft;    ///  equalTo left
@@ -72,16 +76,14 @@
 - (UIView * (^)(UIView *obj))m_equalToHeight;  ///  equalTo height
 - (UIView * (^)(UIView *obj))m_equalToSize;    ///  equalTo size
 - (UIView * (^)(UIView *obj))m_equalToCenter;  ///  equalTo center
-
 /*
     相对与兄弟节点，线性布局
  */
 - (UIView * (^)(CGFloat space))m_hstack;                 ///< 水平，居中对齐
 - (UIView * (^)(CGFloat space))m_vstack;                 ///< 垂直，居中对齐
 
-- (UIView * (^)(void))m_sizeToFit;
 
-- (NSData *)mm_createPDF;/// create self PDF
+- (UIView * (^)(void))m_sizeToFit;
 
 @end
 
