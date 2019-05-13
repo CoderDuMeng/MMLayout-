@@ -30,6 +30,13 @@
 @property (readonly) UIView *mm_sibling;      //兄弟视图
 @property (readonly) UIViewController *mm_viewController;  //self Responder UIViewControler
 
+// iPhoneX adapt
+
+@property (readonly) CGFloat mm_safeAreaBottomGap;
+@property (readonly) CGFloat mm_safeAreaTopGap;
+@property (readonly) CGFloat mm_safeAreaLeftGap;
+@property (readonly) CGFloat mm_safeAreaRightGap;
+
 /*
    示例链接编程
    self.mm_width(100).mm_height(100).mm_left(10).mm_top(10)
