@@ -42,6 +42,16 @@
     return self.frame.size.height;
 }
 
+- (void)setMm_s:(CGSize)mm_s {
+    CGRect frame = self.frame;
+    frame.size = mm_s;
+    self.frame = frame;
+}
+
+- (CGSize)mm_s {
+    return self.frame.size;
+}
+
 -(CGFloat)mm_centerX {
     return self.center.x;
 }
@@ -183,6 +193,15 @@
     };
 }
 
+- (UIView *(^)(CGSize))mm_size {
+    @mm_weakify(self);
+    return ^(CGSize size){
+        @mm_strongify(self);
+        NSAssert(self.mm_size, @"must set size first");
+        self.mm_s = size;
+        return self;
+    };
+}
 
 -(UIView *(^)(void))mm_center {
     @mm_weakify(self);
