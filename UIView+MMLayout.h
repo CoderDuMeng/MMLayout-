@@ -14,7 +14,7 @@
 @property (nonatomic) CGFloat mm_y;            ///<< frame.y
 @property (nonatomic) CGFloat mm_w;            ///<< frame.size.width
 @property (nonatomic) CGFloat mm_h;            ///<< frame.size.height
-
+@property (nonatomic) CGSize mm_s;             ///<< frame.size
 @property (nonatomic) CGFloat mm_r;            ///<< right
 @property (nonatomic) CGFloat mm_b;            ///<< bottom
 
@@ -51,7 +51,7 @@
 - (UIView * (^)(CGFloat height))mm_height;      ///< set frame height
 - (UIView * (^)(CGFloat x))mm__centerX;         ///< set center
 - (UIView * (^)(CGFloat y))mm__centerY;         ///< set center
-
+- (UIView * (^)(CGSize size))mm_size;          ///< set size
 /*
  相对父View
  */
