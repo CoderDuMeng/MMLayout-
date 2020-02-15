@@ -1,6 +1,6 @@
 Pod::Spec.new do |spec|
   spec.name         = 'MMLayout'
-  spec.version      = '0.1.0'
+  spec.version      = '0.3.0'
   spec.license      =  { :type => 'BSD' }
   spec.homepage     = 'https://github.com/annidy/MMLayout'
   spec.authors      = { 'annidy' => 'annidy@gmail.com' }
